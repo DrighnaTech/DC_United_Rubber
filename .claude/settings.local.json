@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree \"c:\\\\Users\\\\SamirSethi\\\\Downloads\\\\United_Rubber_html\"\" 2>/dev/null || find \"c:UsersSamirSethiDownloadsUnited_Rubber_html\"\" -type d)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(list\\(d.keys\\(\\)\\)[:20]\\); print\\(type\\(d\\)\\)\")",
+      "Bash(python -c \"import json; d=json.load\\(open\\(''C:/Users/SamirSethi/Downloads/DataCaffe_AI_Extractor_v3_React/backend/json_data/0262-357671-13.json''\\)\\); print\\(list\\(d.keys\\(\\)\\)[:10]\\)\")",
+      "Bash(python -c \":*)",
+      "Bash(venv/Scripts/python -c \":*)",
+      "Bash(venv/Scripts/pip install psycopg2-binary)",
+      "Bash(\"C:\\\\Users\\\\SamirSethi\\\\Downloads\\\\DataCaffe_AI_Extractor_v3_React\\\\backend\\\\requirements.txt\")"
+    ]
+  }
+}
