@@ -1,0 +1,197 @@
+
+╔══════════════════════════════════════════════╗
+║  United Rubber Sales Analytics              ║
+║  Server running on http://localhost:3000   ║
+╚══════════════════════════════════════════════╝
+
+✓ Database connected (DC_UnitedRubber@db-postgresql-blr1-60665-do-user-15352878-0.k.db.ondigitalocean.com)
+::1 - - [05/Mar/2026:05:08:14 +0000] "GET /health HTTP/1.1" 200 90 "-" "curl/8.11.0"
+::1 - - [05/Mar/2026:05:08:30 +0000] "GET /api/sales-dashboard?date_from=2024-04-01&date_to=2025-01-28 HTTP/1.1" 200 4830 "-" "curl/8.11.0"
+::1 - - [05/Mar/2026:05:08:48 +0000] "GET /api/sales-map?date_from=2024-04-01&date_to=2025-01-28 HTTP/1.1" 200 5000 "-" "curl/8.11.0"
+::1 - - [05/Mar/2026:05:08:51 +0000] "GET /api/invoice-summary?date_from=2024-04-01&date_to=2025-01-28 HTTP/1.1" 200 2424 "-" "curl/8.11.0"
+::1 - - [05/Mar/2026:05:09:50 +0000] "GET / HTTP/1.1" 200 24843 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:09:50 +0000] "GET /style.css HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:09:50 +0000] "GET /script.js HTTP/1.1" 200 46103 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:09:50 +0000] "GET /favicon.ico HTTP/1.1" 200 24843 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:09:51 +0000] "GET /api/filters HTTP/1.1" 200 500 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:09:57 +0000] "GET /api/sales-dashboard? HTTP/1.1" 200 5708 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:10:00 +0000] "GET /api/sales-dashboard/table?page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 200 14136 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:10:19 +0000] "GET /api/sales-map? HTTP/1.1" 200 5034 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:10:32 +0000] "GET /api/sales-dashboard? HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:10:35 +0000] "GET /api/sales-dashboard/table?page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:12:11 +0000] "GET /api/sales-analysis? HTTP/1.1" 200 30730 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:12:32 +0000] "GET /api/sales-analysis?date_from=2026-04-01 HTTP/1.1" 200 82 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:13:08 +0000] "GET /api/sales-analysis?date_from=2024-04-01 HTTP/1.1" 200 30730 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:13:40 +0000] "GET /api/sales-analysis?date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 200 2202 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:13:52 +0000] "GET /api/sales-dashboard?date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 200 3437 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:13:56 +0000] "GET /api/sales-dashboard/table?date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 200 14416 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:13:58 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 200 3148 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:14:02 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 200 14497 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:14:14 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&invoice_type=Sales+%28+Commercial+%29&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 200 3147 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:14:17 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&invoice_type=Sales+%28+Commercial+%29&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 200 14497 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:14:22 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&invoice_type=Sales+Return&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 200 2196 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:14:25 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&invoice_type=Sales+Return&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 200 4972 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:14:29 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:14:32 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:15:04 +0000] "GET /api/sales-analysis?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 200 1605 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:15:09 +0000] "GET /api/invoice-summary?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 200 883 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:15:12 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 200 17696 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:17:37 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:17:40 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:27:13 +0000] "GET /api/sales-map?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 200 4671 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:32:46 +0000] "GET /api/export?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&dashboard=sales-map&type=excel HTTP/1.1" 200 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:34:00 +0000] "GET /api/sales-analysis?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:34:03 +0000] "GET /api/invoice-summary?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:34:07 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:36:03 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_no&sort_dir=asc HTTP/1.1" 200 17651 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:36:05 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_no&sort_dir=asc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:36:05 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_no&sort_dir=desc HTTP/1.1" 200 16922 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:36:10 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_no&sort_dir=asc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:36:11 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_no&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:36:14 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_no&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:39:38 +0000] "GET /api/sales-map?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:40:06 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:40:09 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:20 +0000] "GET /api/sales-map?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:20 +0000] "GET /api/invoice-summary?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:23 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_no&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:35 +0000] "GET /api/sales-analysis?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:38 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:42 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:43 +0000] "GET /api/sales-analysis?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:44 +0000] "GET /api/invoice-summary?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:47 +0000] "GET /api/invoice-summary/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_no&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:41:58 +0000] "GET /api/sales-analysis?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:44:46 +0000] "GET /api/sales-analysis? HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:46:06 +0000] "GET /api/sales-dashboard? HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:46:08 +0000] "GET /api/sales-dashboard/table?page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:46:34 +0000] "GET /api/sales-dashboard?status=Exported+To+GL HTTP/1.1" 200 5202 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:05:46:38 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 200 14136 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:06:08:51 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&date_from=2024-04-01 HTTP/1.1" 200 5202 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:06:08:55 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&date_from=2024-04-01&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 200 14136 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:06:09:08 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:06:09:11 +0000] "GET /api/sales-dashboard/table?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30&page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:06:18:29 +0000] "GET /api/sales-map?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[DB] Query error: Connection terminated due to connection timeout 
+SQL: WITH deduped AS (
+  SELECT DISTINCT ON ("Invoice_No_") *
+  FROM "LandingStage2"."mf_sales_si_siheader_all"
+  WHERE "Invoice_No_" NOT LIKE '%-R'
+    AND "Status_"      != '0'
+    AND "Invoice_Type_" != '0'
+  ORDER BY "Invoice_No_", row_id DESC
+)
+         SELECT
+           COUNT(*)                                      AS total_invoices,
+           SUM(COALESCE(NULLIF("Final_Net_Amount_", '')::NUMERIC, 0))                           AS total_sales,
+           SUM(COALESCE(NULLIF("Amount_", '')::NUMERIC, 0))                       AS total_net_amount,
+           SUM(COALESCE(NULLIF("Invoice_Amount_", '')::NUMERIC, 0))                     AS total_gross_amount,
+           SUM(COALESCE(NULLIF("Tax_", '')::NUMERIC, 0))                       AS total_tax,
+           AVG(COALESCE(NULLIF("Invoice_Amount_", '')::NUMERIC, 0))                     AS avg_invoice_value,
+           MIN("Invoice_Date_(Date)"::DATE)                 AS first_date,
+           MAX("Invoice_Date_(Date)"::DATE)                 AS last_date,
+           COUNT(DISTINCT "Customer_Name_")           AS unique_customers
+         FROM deduped
+         WHERE "Status_" = $1 AND "Invoice_Date_(Date)"::DATE >= $2::DATE AND "Invoice_Date_(Date)"::DATE <= $3::DATE 
+Params: [ 'Exported To GL', '2024-04-01', '2024-04-30' ]
+[sales-dashboard] Error: Connection terminated due to connection timeout
+::1 - - [05/Mar/2026:06:20:05 +0000] "GET /api/sales-dashboard?status=Exported+To+GL&date_from=2024-04-01&date_to=2024-04-30 HTTP/1.1" 500 99 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+[DB] Query error: Connection terminated due to connection timeout 
+SQL: WITH deduped AS (
+  SELECT DISTINCT ON ("Invoice_No_") *
+  FROM "LandingStage2"."mf_sales_si_siheader_all"
+  WHERE "Invoice_No_" NOT LIKE '%-R'
+    AND "Status_"      != '0'
+    AND "Invoice_Type_" != '0'
+  ORDER BY "Invoice_No_", row_id DESC
+),
+         filtered_inv AS (
+           SELECT "Invoice_No_" FROM deduped WHERE "Status_" = $1 AND "Invoice_Date_(Date)"::DATE >= $2::DATE AND "Invoice_Date_(Date)"::DATE <= $3::DATE
+         ),
+         deduped_items AS (
+  SELECT DISTINCT ON ("Invoice_No_", "Item_Code_") *
+  FROM "LandingStage2"."mf_sales_si_sipl_siid_sisd_sibd_siacd_sidc_all"
+  WHERE "Invoice_No_" NOT LIKE '%-R'
+    AND "Item_Code_" IS NOT NULL
+    AND "Item_Code_" != ''
+    AND "Item_Code_" != '0'
+  ORDER BY "Invoice_No_", "Item_Code_", row_id DESC
+)
+         SELECT
+           COALESCE(di."Item_Category_Description", 'Uncategorized') AS category,
+           COUNT(DISTINCT di."Invoice_No_")                AS invoice_count,
+           ROUND(SUM(COALESCE(NULLIF("Item_Amount", '')::NUMERIC, 0)), 2)                AS total_amount,
+           ROUND(SUM(COALESCE(NULLIF(di."Sales_Qty_",'')::NUMERIC,0)), 0) AS total_qty
+         FROM deduped_items di
+         INNER JOIN filtered_inv fi ON di."Invoice_No_" = fi."Invoice_No_"
+         WHERE di."Item_Category_Description" IS NOT NULL
+           AND di."Item_Category_Description" != ''
+         GROUP BY di."Item_Category_Description"
+         ORDER BY total_amount DESC
+         LIMIT 15 
+Params: [ 'Exported To GL', '2024-04-01', '2024-04-30' ]
+[DB] Query error: Connection terminated due to connection timeout 
+SQL: WITH deduped AS (
+  SELECT DISTINCT ON ("Invoice_No_") *
+  FROM "LandingStage2"."mf_sales_si_siheader_all"
+  WHERE "Invoice_No_" NOT LIKE '%-R'
+    AND "Status_"      != '0'
+    AND "Invoice_Type_" != '0'
+  ORDER BY "Invoice_No_", row_id DESC
+)
+         SELECT
+           COALESCE("Customer_Name_", 'Unknown')  AS customer_name,
+           COUNT(*)                                   AS invoice_count,
+           SUM(COALESCE(NULLIF("Invoice_Amount_", '')::NUMERIC, 0))                  AS total_amount,
+           SUM(COALESCE(NULLIF("Amount_", '')::NUMERIC, 0))                    AS net_amount
+         FROM deduped
+         WHERE "Status_" = $1 AND "Invoice_Date_(Date)"::DATE >= $2::DATE AND "Invoice_Date_(Date)"::DATE <= $3::DATE
+           AND "Customer_Name_" IS NOT NULL
+           AND "Customer_Name_" != ''
+         GROUP BY "Customer_Name_"
+         ORDER BY total_amount DESC
+         LIMIT 10 
+Params: [ 'Exported To GL', '2024-04-01', '2024-04-30' ]
+[DB] Query error: Connection terminated due to connection timeout 
+SQL: WITH deduped AS (
+  SELECT DISTINCT ON ("Invoice_No_") *
+  FROM "LandingStage2"."mf_sales_si_siheader_all"
+  WHERE "Invoice_No_" NOT LIKE '%-R'
+    AND "Status_"      != '0'
+    AND "Invoice_Type_" != '0'
+  ORDER BY "Invoice_No_", row_id DESC
+)
+         SELECT
+           TO_CHAR("Invoice_Date_(Date)"::DATE, 'YYYY-MM')   AS month_key,
+           TO_CHAR("Invoice_Date_(Date)"::DATE, 'Mon YYYY')  AS month_label,
+           COUNT(*)                                         AS invoice_count,
+           SUM(COALESCE(NULLIF("Amount_", '')::NUMERIC, 0))                          AS total_net,
+           SUM(COALESCE(NULLIF("Invoice_Amount_", '')::NUMERIC, 0))                        AS total_amount
+         FROM deduped
+         WHERE "Status_" = $1 AND "Invoice_Date_(Date)"::DATE >= $2::DATE AND "Invoice_Date_(Date)"::DATE <= $3::DATE
+           AND "Invoice_Date_(Date)" IS NOT NULL
+           AND "Invoice_Date_(Date)" != ''
+         GROUP BY month_key, month_label
+         ORDER BY month_key 
+Params: [ 'Exported To GL', '2024-04-01', '2024-04-30' ]
+[DB] Query error: Connection terminated due to connection timeout 
+SQL: WITH deduped AS (
+  SELECT DISTINCT ON ("Invoice_No_") *
+  FROM "LandingStage2"."mf_sales_si_siheader_all"
+  WHERE "Invoice_No_" NOT LIKE '%-R'
+    AND "Status_"      != '0'
+    AND "Invoice_Type_" != '0'
+  ORDER BY "Invoice_No_", row_id DESC
+)
+         SELECT
+           COALESCE("Status_", 'Unknown')  AS status,
+           COUNT(*)                             AS invoice_count,
+           SUM(COALESCE(NULLIF("Invoice_Amount_", '')::NUMERIC, 0))            AS total_amount
+         FROM deduped
+         WHERE "Status_" = $1 AND "Invoice_Date_(Date)"::DATE >= $2::DATE AND "Invoice_Date_(Date)"::DATE <= $3::DATE
+         GROUP BY "Status_"
+         ORDER BY total_amount DESC 
+Params: [ 'Exported To GL', '2024-04-01', '2024-04-30' ]
+::1 - - [05/Mar/2026:06:28:12 +0000] "GET /favicon.ico HTTP/1.1" 200 26844 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:06:28:21 +0000] "GET /api/sales-dashboard? HTTP/1.1" 200 5708 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+::1 - - [05/Mar/2026:06:28:24 +0000] "GET /api/sales-dashboard/table?page=1&page_size=50&sort_by=invoice_date&sort_dir=desc HTTP/1.1" 200 14136 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"

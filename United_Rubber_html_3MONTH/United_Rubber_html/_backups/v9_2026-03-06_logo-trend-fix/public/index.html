@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>United Rubber — Sales Analytics</title>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <!-- Chart.js date adapter -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+  <!-- Leaflet.js -->
+  <link  rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ════════════════ TOP HEADER ════════════════ -->
+<header class="site-header">
+  <div class="header-brand">
+    <img src="/logo/df_white_logo.png" alt="United Rubber" class="brand-logo">
+    <div class="brand-text">
+      <span class="brand-name">United Rubber</span>
+      <span class="brand-sub">Sales Analytics System</span>
+    </div>
+  </div>
+  <div class="header-meta">
+    <span id="lastUpdated" class="last-updated">Loading…</span>
+    <div class="header-actions">
+      <button class="btn btn-outline btn-sm" onclick="exportData('excel')" title="Export Excel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        Excel
+      </button>
+      <button class="btn btn-outline btn-sm" onclick="exportData('pdf')" title="Export PDF">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+        PDF
+      </button>
+      <button class="btn btn-outline btn-sm" onclick="exportHTML()" title="Download HTML">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16,17 21,12 16,7"/><polyline points="8,7 3,12 8,17"/></svg>
+        HTML
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════ GLOBAL FILTER BAR ════════════════ -->
+<div class="filter-bar">
+  <div class="filter-bar-inner">
+
+    <!-- Row 1: Dates · Status · Invoice Type · Site -->
+    <div class="filter-row">
+      <div class="filter-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="22,3 2,3 10,12.46 10,19 14,21 14,12.46"/>
+        </svg>
+        Filters
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-item-label" for="filterDateFrom">From Date</label>
+        <input type="date" id="filterDateFrom" class="filter-select" onchange="onFilterChange()" />
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-item-label" for="filterDateTo">To Date</label>
+        <input type="date" id="filterDateTo" class="filter-select" onchange="onFilterChange()" />
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-item-label">Status</label>
+        <div class="ms-wrapper">
+          <div class="ms-trigger" id="ms-trigger-filterStatus" onclick="toggleMultiSelect('filterStatus')">
+            <span class="ms-text" id="ms-text-filterStatus">All Statuses</span>
+            <svg class="ms-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg>
+          </div>
+          <div class="ms-dropdown" id="ms-dropdown-filterStatus"></div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-item-label">Invoice Type</label>
+        <div class="ms-wrapper">
+          <div class="ms-trigger" id="ms-trigger-filterInvoiceType" onclick="toggleMultiSelect('filterInvoiceType')">
+            <span class="ms-text" id="ms-text-filterInvoiceType">All Types</span>
+            <svg class="ms-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg>
+          </div>
+          <div class="ms-dropdown" id="ms-dropdown-filterInvoiceType"></div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-item-label">Site</label>
+        <div class="ms-wrapper">
+          <div class="ms-trigger" id="ms-trigger-filterSite" onclick="toggleMultiSelect('filterSite')">
+            <span class="ms-text" id="ms-text-filterSite">All Sites</span>
+            <svg class="ms-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg>
+          </div>
+          <div class="ms-dropdown" id="ms-dropdown-filterSite"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Ship-to State · Customer Name · Clear · Badge -->
+    <div class="filter-row">
+      <div style="min-width:60px"></div><!-- aligns with Filters label above -->
+
+      <div class="filter-group">
+        <label class="filter-item-label">Ship-to State</label>
+        <div class="ms-wrapper">
+          <div class="ms-trigger" id="ms-trigger-filterShipState" onclick="toggleMultiSelect('filterShipState')">
+            <span class="ms-text" id="ms-text-filterShipState">All States</span>
+            <svg class="ms-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg>
+          </div>
+          <div class="ms-dropdown" id="ms-dropdown-filterShipState"></div>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-item-label">Customer Name</label>
+        <div class="ms-wrapper">
+          <div class="ms-trigger" id="ms-trigger-filterCustomerName" onclick="toggleMultiSelect('filterCustomerName')">
+            <span class="ms-text" id="ms-text-filterCustomerName">All Customers</span>
+            <svg class="ms-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg>
+          </div>
+          <div class="ms-dropdown" id="ms-dropdown-filterCustomerName"></div>
+        </div>
+      </div>
+
+      <button class="btn btn-ghost btn-sm" onclick="clearFilters()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+        Clear
+      </button>
+
+      <div id="filterIndicator" class="filter-indicator" style="display:none">
+        <span id="filterBadge" class="filter-badge"></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════ TAB NAVIGATION ════════════════ -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" data-tab="sales-analysis" onclick="switchTab('sales-analysis', this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+      </svg>
+      Summary Analysis
+    </button>
+    <button class="tab-btn" data-tab="sales-dashboard" onclick="switchTab('sales-dashboard', this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      Sales Details Dashboard
+    </button>
+    <button class="tab-btn" data-tab="sales-map" onclick="switchTab('sales-map', this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="1,6 1,22 8,18 16,22 23,18 23,2 16,6 8,2"/>
+        <line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+      </svg>
+      Distribution Map
+    </button>
+    <button class="tab-btn" data-tab="invoice-summary" onclick="switchTab('invoice-summary', this)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/>
+      </svg>
+      Invoice Summary
+    </button>
+  </div>
+</nav>
+
+<!-- ════════════════ GLOBAL LOADER ════════════════ -->
+<div id="globalLoader" class="global-loader" style="display:none">
+  <div class="loader-spinner"></div>
+  <span class="loader-text">Loading data…</span>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     TAB 1 — SALES DASHBOARD
+════════════════════════════════════════════════ -->
+<div id="tab-sales-dashboard" class="tab-content">
+  <div class="tab-section-header">
+    <h2>Sales Details Dashboard <span class="tab-subtitle">Executive Overview</span></h2>
+  </div>
+
+  <!-- KPI Cards — 6 per CRD: Net, Gross, Rate, Tax, Sales Qty, No of Invoice -->
+  <div class="kpi-grid" id="sd-kpi" style="grid-template-columns: repeat(3, 1fr)">
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Net Amount</div>
+        <div class="kpi-value" id="sd-total-sales">—</div>
+        <div class="kpi-sub" id="sd-date-range">—</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Gross Amount</div>
+        <div class="kpi-value" id="sd-gross-amount">—</div>
+        <div class="kpi-sub">Incl. tax &amp; charges</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--purple">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Rate</div>
+        <div class="kpi-value" id="sd-total-rate">—</div>
+        <div class="kpi-sub">Total rate sum</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--orange">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Tax</div>
+        <div class="kpi-value" id="sd-total-tax">—</div>
+        <div class="kpi-sub">GST / Tax amount</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--info" style="background:rgba(8,145,178,.12)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0891B2" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18M9 9v12"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Sales Qty</div>
+        <div class="kpi-value" id="sd-sales-qty">—</div>
+        <div class="kpi-sub">Units sold</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">No of Invoice</div>
+        <div class="kpi-value" id="sd-total-invoices">—</div>
+        <div class="kpi-sub">Unique invoices</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Row 1: Monthly Trend + Sales Distribution Pie -->
+  <div class="charts-row">
+    <div class="chart-card chart-card--wide">
+      <div class="chart-header">
+        <h3>Sales Summary Over Time (Net Amount)</h3>
+      </div>
+      <div class="chart-body">
+        <canvas id="sd-monthly-chart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Sales Distribution by Customers</h3>
+      </div>
+      <div class="chart-body">
+        <canvas id="sd-customers-pie-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Customers + Item Category -->
+  <div class="charts-row">
+    <div class="chart-card chart-card--wide">
+      <div class="chart-header">
+        <h3>Top 10 Customers by Gross Amount</h3>
+      </div>
+      <div class="chart-body chart-body--tall">
+        <canvas id="sd-customers-chart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>Net Amount by Item Category</h3>
+      </div>
+      <div class="chart-body chart-body--tall">
+        <canvas id="sd-item-cat-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Details Table -->
+  <div class="table-card">
+    <div class="table-header">
+      <h3>Order Details</h3>
+      <div class="table-controls">
+        <select id="sd-page-size" class="filter-select" onchange="sdChangePage(1)">
+          <option value="25">25 / page</option>
+          <option value="50" selected>50 / page</option>
+          <option value="100">100 / page</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="data-table" id="sd-table">
+        <thead>
+          <tr>
+            <th class="sortable" data-col="invoice_no" onclick="sdSort('invoice_no')">Invoice No <span class="sort-icon">↕</span></th>
+            <th class="sortable" data-col="invoice_date" onclick="sdSort('invoice_date')">Invoice Date <span class="sort-icon">↕</span></th>
+            <th>Ship City</th>
+            <th>Description</th>
+            <th>Created Date</th>
+            <th>Approved Date</th>
+            <th>Preparation Date</th>
+            <th>Removal Date</th>
+          </tr>
+        </thead>
+        <tbody id="sd-table-body">
+          <tr><td colspan="8" class="table-empty">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination" id="sd-pagination"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     TAB 2 — SALES DISTRIBUTION MAP
+════════════════════════════════════════════════ -->
+<div id="tab-sales-map" class="tab-content">
+  <div class="tab-section-header">
+    <h2>Sales Distribution Map <span class="tab-subtitle">Geographic Revenue Analysis</span></h2>
+  </div>
+
+  <!-- Map KPIs -->
+  <div class="kpi-grid kpi-grid--3" id="map-kpi">
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">States Covered</div>
+        <div class="kpi-value" id="map-states-count">—</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Total Revenue</div>
+        <div class="kpi-value" id="map-total-rev">—</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--purple">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Top State</div>
+        <div class="kpi-value kpi-value--sm" id="map-top-state">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map + Chart layout -->
+  <div class="map-layout">
+    <div class="map-container-wrap">
+      <div class="map-legend">
+        <div class="legend-title">Revenue Scale (₹)</div>
+        <div class="legend-scale" id="map-legend-scale"></div>
+      </div>
+      <div id="leaflet-map"></div>
+      <div class="map-note">* Colors based on Ship-to State from invoice records. Hover over states for details.</div>
+    </div>
+    <div class="map-sidebar">
+      <div class="chart-card">
+        <div class="chart-header"><h3>Top 10 States</h3></div>
+        <div class="chart-body chart-body--tall">
+          <canvas id="map-states-chart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sales Qty by City chart -->
+  <div class="charts-row" style="margin-top:24px">
+    <div class="chart-card chart-card--full">
+      <div class="chart-header"><h3>Top 20 Cities by Sales Quantity</h3></div>
+      <div class="chart-body chart-body--tall">
+        <canvas id="map-city-qty-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- State Revenue Table -->
+  <div class="table-card" style="margin-top:24px">
+    <div class="table-header"><h3>State-wise Revenue (Ship-to)</h3></div>
+    <div class="table-responsive">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>State</th>
+            <th class="text-right">Invoice Count</th>
+            <th class="text-right">Gross Amount (₹)</th>
+            <th class="text-right">Avg Invoice (₹)</th>
+          </tr>
+        </thead>
+        <tbody id="map-district-body">
+          <tr><td colspan="5" class="table-empty">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     TAB 3 — SALES INVOICE SUMMARY
+════════════════════════════════════════════════ -->
+<div id="tab-invoice-summary" class="tab-content">
+  <div class="tab-section-header">
+    <h2>Sales Invoice Summary <span class="tab-subtitle">Invoice Analytics</span></h2>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid" id="is-kpi">
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Invoice Count</div>
+        <div class="kpi-value" id="is-count">—</div>
+        <div class="kpi-sub" id="is-period">—</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Total Invoice Amount</div>
+        <div class="kpi-value" id="is-total">—</div>
+        <div class="kpi-sub" id="is-avg">Avg: —</div>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--purple">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      </div>
+      <div class="kpi-body">
+        <div class="kpi-label">Unique Customers</div>
+        <div class="kpi-value" id="is-customers">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invoice Detail Table -->
+  <div class="table-card">
+    <div class="table-header">
+      <h3>Sales Invoice Detail</h3>
+      <div class="table-controls">
+        <select id="is-page-size" class="filter-select" onchange="isChangePage(1)">
+          <option value="25">25 / page</option>
+          <option value="50" selected>50 / page</option>
+          <option value="100">100 / page</option>
+        </select>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="data-table" id="is-table">
+        <thead>
+          <tr>
+            <th class="sortable" onclick="isSort('invoice_no')">Invoice No <span class="sort-icon">↕</span></th>
+            <th class="sortable" onclick="isSort('invoice_date')">Date <span class="sort-icon">↕</span></th>
+            <th>Site</th>
+            <th class="sortable" onclick="isSort('customer_name')">Customer <span class="sort-icon">↕</span></th>
+            <th class="sortable" onclick="isSort('invoice_type')">Type <span class="sort-icon">↕</span></th>
+            <th class="sortable" onclick="isSort('status')">Status <span class="sort-icon">↕</span></th>
+            <th class="text-right">Net Amt (₹)</th>
+            <th class="text-right">Tax (₹)</th>
+            <th class="sortable text-right" onclick="isSort('amount')">Gross Amt (₹) <span class="sort-icon">↕</span></th>
+            <th class="text-right">Charges (₹)</th>
+            <th class="text-right">Discount (₹)</th>
+            <th>Ship State</th>
+            <th>Ship City</th>
+            <th>Party Group</th>
+            <th>Employee</th>
+          </tr>
+        </thead>
+        <tbody id="is-table-body">
+          <tr><td colspan="15" class="table-empty">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination" id="is-pagination"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     TAB 4 — SALES SUMMARY ANALYSIS
+════════════════════════════════════════════════ -->
+<div id="tab-sales-analysis" class="tab-content active">
+  <div class="tab-section-header">
+    <h2>Sales Summary Analysis <span class="tab-subtitle">Monthly Sales & Domestic Breakdown</span></h2>
+  </div>
+
+  <!-- KPI Cards: From Date, To Date, Net Amount, Gross Amount -->
+  <div class="kpi-grid" id="sa-yearly-kpis" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))">
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div class="kpi-body"><div class="kpi-label">From Date</div><div class="kpi-value" id="sa-from-date">—</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div class="kpi-body"><div class="kpi-label">To Date</div><div class="kpi-value" id="sa-to-date">—</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="kpi-body"><div class="kpi-label">Net Amount</div><div class="kpi-value" id="sa-net-amount">—</div></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon kpi-icon--green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="kpi-body"><div class="kpi-label">Gross Amount</div><div class="kpi-value" id="sa-gross-amount">—</div></div>
+    </div>
+  </div>
+
+  <!-- Monthly Sales Summary (Net Amount) Line Chart -->
+  <div class="charts-row" style="margin-top:20px">
+    <div class="chart-card chart-card--full">
+      <div class="chart-header">
+        <h3>Monthly Sales Summary (Net Amount) 2024–2025</h3>
+        <div class="chart-legend-custom" id="sa-trend-legend"></div>
+      </div>
+      <div class="chart-body chart-body--tall">
+        <canvas id="sa-trend-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monthly Sales by Site (Domestic) Bar Chart -->
+  <div class="charts-row">
+    <div class="chart-card chart-card--full">
+      <div class="chart-header"><h3>Site-wise Monthly Net Revenue (Domestic)</h3></div>
+      <div class="chart-body chart-body--tall">
+        <canvas id="sa-site-bar-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Domestic Site × Month Pivot Table -->
+  <div class="table-card" style="margin-top:24px">
+    <div class="table-header"><h3>Site-wise Monthly Net Revenue (Domestic)</h3></div>
+    <div id="sa-domestic-wrap">
+      <tr><td colspan="3" class="table-empty">Loading…</td></tr>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer class="site-footer">
+  <span>United Rubber Sales Analytics &copy; 2024–2025</span>
+  <span id="footer-db-info" class="footer-db">Connected to LandingStage2</span>
+</footer>
+
+<!-- Main JS -->
+<script src="script.js"></script>
+</body>
+</html>
