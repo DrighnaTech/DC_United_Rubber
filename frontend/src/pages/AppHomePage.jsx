@@ -27,7 +27,7 @@ export default function AppHomePage() {
   const [hoverIdx, setHoverIdx] = useState(null)
 
   return (
-    <div style={{ background: isDark ? '#020617' : '#ffffff', minHeight: '100vh' }}>
+    <div style={{ background: isDark ? '#0f172a' : '#ffffff', minHeight: '100vh' }}>
       {/* ── Hero Section ── */}
       <div
         style={{
@@ -232,7 +232,7 @@ export default function AppHomePage() {
             fontFamily: "'Playfair Display', serif",
             fontSize: 32,
             fontWeight: 700,
-            color: isDark ? '#f1f5f9' : '#1a1a1a',
+            color: isDark ? '#f1f5f9' : '#111827',
             textAlign: 'center',
             marginBottom: 16,
           }}
@@ -320,7 +320,7 @@ export default function AppHomePage() {
                     fontFamily: "'Playfair Display', serif",
                     fontSize: 18,
                     fontWeight: 700,
-                    color: isDark ? '#f1f5f9' : '#1a1a1a',
+                    color: isDark ? '#f1f5f9' : '#111827',
                     margin: '0 0 6px',
                   }}
                 >
@@ -329,7 +329,7 @@ export default function AppHomePage() {
                 <p
                   style={{
                     fontSize: 14,
-                    color: isDark ? '#94a3b8' : '#6b7280',
+                    color: isDark ? '#94a3b8' : '#4b5563',
                     lineHeight: 1.65,
                     margin: 0,
                   }}

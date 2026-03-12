@@ -46,16 +46,10 @@ export default function Logo({ size = 44, showText = true, light = false }) {
             lineHeight: 1.1,
             whiteSpace: 'nowrap',
           }}>
-            {light ? (
-              /* Dark background: all white */
-              <span style={{ color: '#ffffff' }}>United Rubber</span>
-            ) : (
-              /* Light background: brand colors */
-              <>
-                <span style={{ color: '#F07621' }}>United</span>{' '}
-                <span style={{ color: '#1A5EA8' }}>Rubber</span>
-              </>
-            )}
+            <>
+              <span style={{ color: '#F07621' }}>United</span>{' '}
+              <span style={{ color: '#1A5EA8' }}>Rubber</span>
+            </>
           </div>
         </div>
       )}

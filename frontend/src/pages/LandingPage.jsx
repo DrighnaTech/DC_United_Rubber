@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo'
+import Icon from '../components/Icons'
+import Footer from '../components/Footer'
 
 /* ─────────────────────────────────────────────
    THEME DEFINITIONS
@@ -30,8 +32,8 @@ const DARK = {
   cardTextDesc: 'rgba(148,163,184,0.75)',
   ctaSectionBg: 'linear-gradient(135deg, #0d1218 0%, #111827 100%)',
   ctaSectionBorder: 'rgba(255,255,255,0.05)',
-  ctaCardBg: 'linear-gradient(135deg, rgba(232,69,69,0.1) 0%, rgba(240,123,28,0.08) 100%)',
-  ctaCardBorder: 'rgba(232,69,69,0.2)',
+  ctaCardBg: 'linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(59,130,246,0.08) 100%)',
+  ctaCardBorder: 'rgba(99,102,241,0.25)',
   ctaH2: '#fff',
   ctaP: 'rgba(176,200,224,0.7)',
   dotGrid: 'radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px)',
@@ -39,6 +41,17 @@ const DARK = {
   toggleBorder: 'rgba(255,255,255,0.15)',
   toggleColor: '#f8fafc',
   toggleHoverBg: 'rgba(255,255,255,0.18)',
+  // Accent colors
+  badgeBg: 'rgba(99,102,241,0.15)',
+  badgeBorder: 'rgba(99,102,241,0.35)',
+  badgeDot: '#818cf8',
+  badgeText: '#a5b4fc',
+  accentGradient: 'linear-gradient(135deg, #6366f1, #3b82f6)',
+  accentLine: 'linear-gradient(90deg, #6366f1, #3b82f6)',
+  offerBadgeBg: 'rgba(99,102,241,0.12)',
+  offerBadgeBorder: 'rgba(99,102,241,0.3)',
+  offerBadgeText: '#a5b4fc',
+  ctaGlowOrb: 'radial-gradient(circle, rgba(99,102,241,0.2), transparent 70%)',
 }
 
 const LIGHT = {
@@ -66,8 +79,8 @@ const LIGHT = {
   cardTextDesc: '#64748b',
   ctaSectionBg: 'linear-gradient(135deg, #f0f4f8 0%, #e8edf5 100%)',
   ctaSectionBorder: 'rgba(0,0,0,0.06)',
-  ctaCardBg: 'linear-gradient(135deg, rgba(232,69,69,0.06) 0%, rgba(240,123,28,0.04) 100%)',
-  ctaCardBorder: 'rgba(232,69,69,0.18)',
+  ctaCardBg: 'linear-gradient(135deg, rgba(26,94,168,0.06) 0%, rgba(59,130,246,0.04) 100%)',
+  ctaCardBorder: 'rgba(26,94,168,0.2)',
   ctaH2: '#0f172a',
   ctaP: '#475569',
   dotGrid: 'radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px)',
@@ -75,6 +88,17 @@ const LIGHT = {
   toggleBorder: 'rgba(15,23,42,0.15)',
   toggleColor: '#0f172a',
   toggleHoverBg: 'rgba(15,23,42,0.14)',
+  // Accent colors
+  badgeBg: 'rgba(26,94,168,0.08)',
+  badgeBorder: 'rgba(26,94,168,0.2)',
+  badgeDot: '#1A5EA8',
+  badgeText: '#1A5EA8',
+  accentGradient: 'linear-gradient(135deg, #4f46e5, #2563eb)',
+  accentLine: 'linear-gradient(90deg, #1A5EA8, #3b82f6)',
+  offerBadgeBg: 'rgba(26,94,168,0.08)',
+  offerBadgeBorder: 'rgba(26,94,168,0.2)',
+  offerBadgeText: '#1A5EA8',
+  ctaGlowOrb: 'radial-gradient(circle, rgba(26,94,168,0.1), transparent 70%)',
 }
 
 /* ─────────────────────────────────────────────
@@ -147,7 +171,7 @@ function RingArcs({ size }) {
       <circle
         cx={size * 0.69} cy={size * 0.69} r={size * 0.62}
         fill="none"
-        stroke="rgba(240,123,28,0.25)"
+        stroke="rgba(99,102,241,0.25)"
         strokeWidth="1.2"
         strokeDasharray="8 6"
         style={{ animation: 'ringRotate 18s linear infinite' }}
@@ -155,7 +179,7 @@ function RingArcs({ size }) {
       <circle
         cx={size * 0.69} cy={size * 0.69} r={size * 0.55}
         fill="none"
-        stroke="rgba(232,69,69,0.18)"
+        stroke="rgba(59,130,246,0.18)"
         strokeWidth="0.8"
         strokeDasharray="4 10"
         style={{ animation: 'ringRotate 24s linear infinite reverse' }}
@@ -164,13 +188,13 @@ function RingArcs({ size }) {
         d={`M ${size * 0.69 + size * 0.62 * Math.cos(-0.4)} ${size * 0.69 + size * 0.62 * Math.sin(-0.4)}
             A ${size * 0.62} ${size * 0.62} 0 0 1
             ${size * 0.69 + size * 0.62 * Math.cos(0.4)} ${size * 0.69 + size * 0.62 * Math.sin(0.4)}`}
-        fill="none" stroke="#f07b1c" strokeWidth="3" strokeLinecap="round"
+        fill="none" stroke="#818cf8" strokeWidth="3" strokeLinecap="round"
       />
       <path
         d={`M ${size * 0.69 + size * 0.62 * Math.cos(Math.PI + 0.6)} ${size * 0.69 + size * 0.62 * Math.sin(Math.PI + 0.6)}
             A ${size * 0.62} ${size * 0.62} 0 0 1
             ${size * 0.69 + size * 0.62 * Math.cos(Math.PI + 1.1)} ${size * 0.69 + size * 0.62 * Math.sin(Math.PI + 1.1)}`}
-        fill="none" stroke="#e84545" strokeWidth="3" strokeLinecap="round"
+        fill="none" stroke="#6366f1" strokeWidth="3" strokeLinecap="round"
       />
       {[0.15, 0.72, 1.3, 2.0, 2.8, 4.2, 5.1, 5.7].map((angle, i) => {
         const r1 = size * 0.62, r2 = size * 0.66
@@ -180,7 +204,7 @@ function RingArcs({ size }) {
           <line key={i}
             x1={cx + r1 * cos} y1={cy + r1 * sin}
             x2={cx + r2 * cos} y2={cy + r2 * sin}
-            stroke="rgba(240,123,28,0.5)" strokeWidth="1.5" strokeLinecap="round"
+            stroke="rgba(99,102,241,0.5)" strokeWidth="1.5" strokeLinecap="round"
           />
         )
       })}
@@ -193,25 +217,25 @@ function RingArcs({ size }) {
 ───────────────────────────────────────────── */
 const FEATURES = [
   {
-    icon: '🤖',
+    iconName: 'cpu',
     title: 'AI-Powered Reading',
     desc: 'Automatically reads PDFs, scanned images, and complex documents with high precision.',
     color: '#e84545',
   },
   {
-    icon: '📊',
+    iconName: 'bar-chart',
     title: 'Instant Structuring',
     desc: 'Converts unstructured content into clean Excel, CSV, or database-ready formats.',
     color: '#f07b1c',
   },
   {
-    icon: '🔗',
+    iconName: 'link',
     title: 'ERP Integration',
     desc: 'Push extracted data directly into your ERP, CRM, or analytics platforms.',
     color: '#3b82f6',
   },
   {
-    icon: '📈',
+    iconName: 'trending-up',
     title: 'Sales Analytics',
     desc: 'Track performance, trends, and KPIs with interactive United Rubber dashboards.',
     color: '#8b5cf6',
@@ -275,11 +299,12 @@ function FeatureCards({ theme }) {
           <div style={{
             display: 'inline-block',
             padding: '5px 18px', borderRadius: 999,
-            background: 'rgba(240,123,28,0.1)',
-            border: '1px solid rgba(240,123,28,0.25)',
-            fontSize: 11, fontWeight: 700, color: '#f07b1c',
+            background: theme.offerBadgeBg,
+            border: `1px solid ${theme.offerBadgeBorder}`,
+            fontSize: 11, fontWeight: 700, color: theme.offerBadgeText,
             letterSpacing: 2, textTransform: 'uppercase',
             marginBottom: 16,
+            transition: 'background 0.4s ease, border-color 0.4s ease, color 0.4s ease',
           }}>
             What We Offer
           </div>
@@ -291,8 +316,12 @@ function FeatureCards({ theme }) {
           }}>
             Everything you need to<br />
             <span style={{
-              background: 'linear-gradient(135deg, #e84545, #f07b1c)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+              backgroundImage: theme.accentGradient,
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              color: 'transparent',
+              display: 'inline-block',
             }}>
               extract &amp; analyze data
             </span>
@@ -361,7 +390,7 @@ function FeatureCards({ theme }) {
                   boxShadow: `0 4px 16px ${f.color}18`,
                 }}
               >
-                {f.icon}
+                <Icon name={f.iconName} size={24} color={f.color} />
               </div>
 
               {/* Title with animated underline */}
@@ -446,7 +475,7 @@ export default function LandingPage() {
     return () => observer.disconnect()
   }, [])
 
-  const CIRCLE_SIZE = 480
+  const CIRCLE_SIZE = 360
 
   return (
     <div style={{
@@ -501,7 +530,7 @@ export default function LandingPage() {
           align-items: center;
           gap: 10px;
           padding: 15px 36px;
-          background: linear-gradient(135deg, #e84545 0%, #f07b1c 100%);
+          background: linear-gradient(135deg, #1A5EA8 0%, #3b82f6 100%);
           color: #fff;
           border: none;
           border-radius: 10px;
@@ -509,17 +538,17 @@ export default function LandingPage() {
           font-weight: 700;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 8px 32px rgba(232,69,69,0.35);
+          box-shadow: 0 8px 32px rgba(26,94,168,0.35);
           font-family: 'Plus Jakarta Sans', sans-serif;
           letter-spacing: 0.3px;
         }
         .cta-btn:hover {
           transform: translateY(-3px);
-          box-shadow: 0 14px 42px rgba(232,69,69,0.48);
+          box-shadow: 0 14px 42px rgba(26,94,168,0.48);
         }
         .login-btn-nav {
           padding: 9px 26px;
-          background: linear-gradient(135deg, #e84545, #f07b1c);
+          background: linear-gradient(135deg, #F07621, #f59e0b);
           color: #fff;
           border: none;
           border-radius: 9px;
@@ -527,13 +556,13 @@ export default function LandingPage() {
           font-weight: 700;
           cursor: pointer;
           transition: all 0.25s ease;
-          box-shadow: 0 4px 16px rgba(232,69,69,0.3);
+          box-shadow: 0 4px 16px rgba(240,118,33,0.3);
           font-family: 'Plus Jakarta Sans', sans-serif;
           letter-spacing: 0.2px;
         }
         .login-btn-nav:hover {
           transform: translateY(-1px);
-          box-shadow: 0 6px 24px rgba(232,69,69,0.45);
+          box-shadow: 0 6px 24px rgba(240,118,33,0.45);
         }
         .theme-toggle {
           display: flex;
@@ -580,22 +609,8 @@ export default function LandingPage() {
           <Logo size={58} light={isDark} />
         </div>
 
-        {/* Nav Links */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4, flex: 1, justifyContent: 'center' }}>
-          <a
-            style={{
-              color: '#f07b1c',
-              textDecoration: 'none',
-              fontSize: 14,
-              fontWeight: 500,
-              padding: '7px 16px',
-              borderRadius: 8,
-              cursor: 'pointer',
-            }}
-          >
-            Home
-          </a>
-        </div>
+        {/* Spacer */}
+        <div style={{ flex: 1 }} />
 
         {/* Right side: Theme Toggle + Login */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -617,8 +632,24 @@ export default function LandingPage() {
             }}
             title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
-            <span key={isDark ? 'moon' : 'sun'} className="theme-icon">
-              {isDark ? '☀️' : '🌙'}
+            <span key={isDark ? 'sun' : 'moon'} className="theme-icon" style={{ display: 'inline-flex' }}>
+              {isDark ? (
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f8fafc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              ) : (
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0f172a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
             </span>
             {isDark ? 'Light' : 'Dark'}
           </button>
@@ -656,7 +687,7 @@ export default function LandingPage() {
         <div style={{
           position: 'absolute', top: '20%', left: '-10%',
           width: 500, height: 500,
-          background: 'radial-gradient(circle, rgba(232,69,69,0.07) 0%, transparent 65%)',
+          background: 'radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 65%)',
           borderRadius: '50%', filter: 'blur(70px)', pointerEvents: 'none',
           animation: 'glowPulse 6s ease-in-out infinite',
         }} />
@@ -672,20 +703,22 @@ export default function LandingPage() {
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             padding: '6px 16px', borderRadius: 999,
-            background: 'rgba(232,69,69,0.12)',
-            border: '1px solid rgba(232,69,69,0.3)',
+            background: theme.badgeBg,
+            border: `1px solid ${theme.badgeBorder}`,
             marginBottom: 28,
             animation: mounted ? 'badgeSlide 0.7s ease both 0.1s' : 'none',
+            transition: 'background 0.4s ease, border-color 0.4s ease',
           }}>
             <span style={{
               width: 6, height: 6, borderRadius: '50%',
-              background: '#e84545',
-              boxShadow: '0 0 8px #e84545',
+              background: theme.badgeDot,
+              boxShadow: `0 0 8px ${theme.badgeDot}`,
               animation: 'glowPulse 2s ease-in-out infinite',
             }} />
             <span style={{
-              fontSize: 11.5, fontWeight: 700, color: '#f87171',
+              fontSize: 11.5, fontWeight: 700, color: theme.badgeText,
               letterSpacing: 1.8, textTransform: 'uppercase',
+              transition: 'color 0.4s ease',
             }}>
               AI-Powered Intelligence Platform
             </span>
@@ -708,10 +741,10 @@ export default function LandingPage() {
             </span>
           </h1>
 
-          {/* Orange accent underline */}
+          {/* Accent underline */}
           <div style={{
             width: 72, height: 4, borderRadius: 2,
-            background: 'linear-gradient(90deg, #e84545, #f07b1c)',
+            background: theme.accentLine,
             marginBottom: 28,
             marginTop: 12,
           }} />
@@ -761,6 +794,7 @@ export default function LandingPage() {
         <div style={{
           flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
           position: 'relative', zIndex: 2,
+          marginTop: -60,
           opacity: mounted ? 1 : 0,
           animation: mounted ? 'fadeLeft 1s cubic-bezier(0.22,1,0.36,1) 0.15s both' : 'none',
         }}>
@@ -769,7 +803,7 @@ export default function LandingPage() {
             position: 'absolute',
             width: CIRCLE_SIZE * 1.15, height: CIRCLE_SIZE * 1.15,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(232,69,69,0.18) 0%, rgba(240,123,28,0.08) 40%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(59,130,246,0.1) 40%, transparent 70%)',
             filter: 'blur(40px)',
             animation: 'glowPulse 4s ease-in-out infinite',
           }} />
@@ -781,8 +815,8 @@ export default function LandingPage() {
           <div style={{
             width: CIRCLE_SIZE, height: CIRCLE_SIZE,
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, #e84545 0%, #ef5f35 35%, #f07b1c 70%, #f5a623 100%)',
-            boxShadow: '0 24px 80px rgba(232,69,69,0.4), 0 0 120px rgba(240,123,28,0.2)',
+            background: 'linear-gradient(135deg, #6366f1 0%, #818cf8 30%, #3b82f6 60%, #60a5fa 100%)',
+            boxShadow: '0 24px 80px rgba(99,102,241,0.4), 0 0 120px rgba(59,130,246,0.25)',
             position: 'relative',
             animation: 'circleFloat 5s ease-in-out infinite',
             overflow: 'hidden',
@@ -811,15 +845,14 @@ export default function LandingPage() {
               gap: 12,
             }}>
               <div style={{
-                width: 72, height: 72,
+                width: 56, height: 56,
                 background: 'rgba(255,255,255,0.15)',
-                borderRadius: 18,
+                borderRadius: 14,
                 backdropFilter: 'blur(8px)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 32,
                 boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
               }}>
-                🧠
+                <Icon name="brain" size={28} color="#fff" />
               </div>
               <div style={{ textAlign: 'center' }}>
                 <div style={{
@@ -842,10 +875,10 @@ export default function LandingPage() {
 
           {/* Floating data chips */}
           {[
-            { label: '📊 Analytics',    top: '12%', left: '-4%',  delay: '0s' },
-            { label: '📄 Documents',    top: '72%', left: '-8%',  delay: '0.4s' },
-            { label: '⚡ Instant Data', top: '18%', right: '-6%', delay: '0.2s' },
-            { label: '🔒 Secure',       top: '76%', right: '-4%', delay: '0.6s' },
+            { icon: 'bar-chart', label: 'Analytics',    iconColor: '#3b82f6', top: '12%', left: '-4%',  delay: '0s' },
+            { icon: 'file',      label: 'Documents',    iconColor: '#f07b1c', top: '72%', left: '-8%',  delay: '0.4s' },
+            { icon: 'zap',       label: 'Instant Data', iconColor: '#eab308', top: '18%', right: '-6%', delay: '0.2s' },
+            { icon: 'lock',      label: 'Secure',       iconColor: '#10b981', top: '76%', right: '-4%', delay: '0.6s' },
           ].map((chip, i) => (
             <div key={i} style={{
               position: 'absolute',
@@ -859,10 +892,12 @@ export default function LandingPage() {
               fontSize: 12.5,
               fontWeight: 600,
               whiteSpace: 'nowrap',
+              display: 'flex', alignItems: 'center', gap: 8,
               boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
               animation: `circleFloat ${4 + i * 0.5}s ease-in-out ${chip.delay} infinite`,
               transition: 'background 0.4s ease, color 0.4s ease, border-color 0.4s ease',
             }}>
+              <Icon name={chip.icon} size={15} color={chip.iconColor} />
               {chip.label}
             </div>
           ))}
@@ -895,7 +930,7 @@ export default function LandingPage() {
           <div style={{
             position: 'absolute', top: -60, right: -60,
             width: 200, height: 200, borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(232,69,69,0.15), transparent 70%)',
+            background: theme.ctaGlowOrb,
             filter: 'blur(30px)',
           }} />
           <h2 style={{
@@ -923,6 +958,11 @@ export default function LandingPage() {
           </button>
         </div>
       </section>
+
+      {/* ══════════════════════════════════════
+          FOOTER
+      ══════════════════════════════════════ */}
+      <Footer light={!isDark} />
 
     </div>
   )

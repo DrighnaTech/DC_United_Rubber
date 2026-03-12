@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from './Logo'
 import { useScrollPosition } from '../hooks/useAnimations'
+import Icon from './Icons'
 
 const NAV_LINKS = [
   { label: "Home", href: "#top" },
@@ -118,7 +119,7 @@ export default function Navbar() {
             e.currentTarget.style.color = '#64748b'
           }}
         >
-          🔍
+          <Icon name="search" size={16} color="currentColor" />
         </button>
 
         <button

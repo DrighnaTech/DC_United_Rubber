@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { PIPELINE_STEPS } from '../utils/constants'
 import { useInView } from '../hooks/useAnimations'
+import Icon from './Icons'
 
 /* ── Floating sparkle particles around active card ── */
 function CardSparkles({ color, active }) {
@@ -70,8 +71,9 @@ function FlowingParticles({ active }) {
 }
 
 /* ── Animated SVG connection line between steps ── */
-function TimelineConnector({ inView, activeStep, totalSteps }) {
+function TimelineConnector({ inView, activeStep, totalSteps, isDark }) {
   const progressPercent = ((activeStep + 1) / totalSteps) * 100
+  const trackColor = isDark ? 'rgba(51,65,85,0.6)' : 'rgba(226, 232, 240, 0.6)'
 
   return (
     <svg
@@ -107,7 +109,7 @@ function TimelineConnector({ inView, activeStep, totalSteps }) {
       {/* Background track */}
       <line
         x1="0" y1="4" x2="100%" y2="4"
-        stroke="rgba(226, 232, 240, 0.6)"
+        stroke={trackColor}
         strokeWidth="3"
         strokeLinecap="round"
         style={{
@@ -172,11 +174,25 @@ function TimelineConnector({ inView, activeStep, totalSteps }) {
 }
 
 /* ── Single timeline step card ── */
-function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, activeStep }) {
+function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, activeStep, isDark }) {
   const isCompleted = index < activeStep
   const isCurrent = index === activeStep
   const cardRef = useRef(null)
   const [tilt, setTilt] = useState({ x: 0, y: 0 })
+
+  const cardBg = isDark
+    ? (isHovered ? 'rgba(30,41,59,1)' : 'rgba(15,23,42,0.9)')
+    : (isHovered ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.9)')
+  const cardBorder = isHovered
+    ? step.color + '50'
+    : isDark ? 'rgba(51,65,85,0.6)' : 'rgba(226, 232, 240, 0.8)'
+  const titleColor = isHovered ? step.color : (isDark ? '#f1f5f9' : '#1e293b')
+  const descColor = isDark ? '#94a3b8' : '#64748b'
+  const nodeInactiveBg = isDark
+    ? 'linear-gradient(135deg, #1e293b, #334155)'
+    : 'linear-gradient(135deg, #f1f5f9, #e2e8f0)'
+  const nodeInactiveBorder = isDark ? '#334155' : '#e2e8f0'
+  const nodeInactiveColor = isDark ? '#64748b' : '#94a3b8'
 
   /* 3D tilt effect on mouse move */
   const handleMouseMove = useCallback((e) => {
@@ -251,14 +267,14 @@ function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, active
               ? step.gradient
               : isCompleted
                 ? `linear-gradient(135deg, ${step.color}dd, ${step.color})`
-                : 'linear-gradient(135deg, #f1f5f9, #e2e8f0)',
-            border: `3px solid ${isHovered || isCurrent ? '#fff' : isCompleted ? step.color + '60' : '#e2e8f0'}`,
+                : nodeInactiveBg,
+            border: `3px solid ${isHovered || isCurrent ? '#fff' : isCompleted ? step.color + '60' : nodeInactiveBorder}`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: 16,
             fontWeight: 800,
-            color: isHovered || isCurrent || isCompleted ? '#fff' : '#94a3b8',
+            color: isHovered || isCurrent || isCompleted ? '#fff' : nodeInactiveColor,
             transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
             boxShadow: isHovered || isCurrent
               ? `0 0 0 6px ${step.color}20, 0 8px 30px ${step.color}40, 0 0 20px ${step.color}25`
@@ -291,12 +307,10 @@ function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, active
           minHeight: 220,
           padding: '30px 22px 28px',
           borderRadius: 20,
-          background: isHovered
-            ? 'rgba(255, 255, 255, 1)'
-            : 'rgba(255, 255, 255, 0.9)',
+          background: cardBg,
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
-          border: `1.5px solid ${isHovered ? step.color + '50' : 'rgba(226, 232, 240, 0.8)'}`,
+          border: `1.5px solid ${cardBorder}`,
           position: 'relative',
           overflow: 'hidden',
           transition: 'all 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -306,10 +320,10 @@ function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, active
               ? 'translateY(-6px)'
               : 'translateY(0)',
           boxShadow: isHovered
-            ? `0 25px 50px ${step.color}18, 0 12px 30px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6)`
+            ? `0 25px 50px ${step.color}18, 0 12px 30px rgba(0,0,0,0.08), inset 0 1px 0 ${isDark ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.6)'}`
             : isCurrent
-              ? `0 12px 35px ${step.color}12, 0 4px 15px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.5)`
-              : '0 4px 20px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.5)',
+              ? `0 12px 35px ${step.color}12, 0 4px 15px rgba(0,0,0,0.04), inset 0 1px 0 ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.5)'}`
+              : `0 4px 20px rgba(0,0,0,${isDark ? '0.2' : '0.04'}), inset 0 1px 0 ${isDark ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.5)'}`,
           cursor: 'pointer',
           textAlign: 'center',
           willChange: 'transform',
@@ -370,7 +384,6 @@ function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, active
         {/* Icon with bounce entrance */}
         <div
           style={{
-            fontSize: 42,
             marginBottom: 16,
             transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
             transform: isHovered ? 'scale(1.15)' : 'scale(1)',
@@ -382,7 +395,7 @@ function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, active
             filter: isHovered ? `drop-shadow(0 4px 8px ${step.color}30)` : 'none',
           }}
         >
-          {step.emoji}
+          <Icon name={step.icon} size={38} color={isHovered || isCurrent ? step.color : (isDark ? '#94a3b8' : '#64748b')} />
         </div>
 
         {/* Title */}
@@ -390,7 +403,7 @@ function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, active
           style={{
             fontWeight: 700,
             fontSize: 16,
-            color: isHovered ? step.color : '#1e293b',
+            color: titleColor,
             marginBottom: 10,
             letterSpacing: -0.3,
             transition: 'color 0.3s ease',
@@ -403,7 +416,7 @@ function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, active
         <div
           style={{
             fontSize: 13,
-            color: '#64748b',
+            color: descColor,
             lineHeight: 1.75,
             letterSpacing: 0.1,
             flex: 1,
@@ -420,7 +433,7 @@ function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, active
             width: 6,
             height: 6,
             borderRadius: '50%',
-            background: isCurrent || isHovered ? step.gradient : 'rgba(148, 163, 184, 0.3)',
+            background: isCurrent || isHovered ? step.gradient : `rgba(148, 163, 184, ${isDark ? '0.2' : '0.3'})`,
             marginTop: 16,
             transition: 'all 0.4s ease',
             transform: isCurrent || isHovered ? 'scale(1)' : 'scale(0.6)',
@@ -448,11 +461,33 @@ function TimelineStep({ step, index, isHovered, onHover, onLeave, inView, active
 }
 
 
-export default function WhatIsPage() {
+export default function WhatIsPage({ isDark = false }) {
   const [titleRef, titleInView] = useInView({ threshold: 0.2 })
   const [cardsRef, cardsInView] = useInView({ threshold: 0.1 })
   const [hoveredCard, setHoveredCard] = useState(null)
   const [activeStep, setActiveStep] = useState(0)
+
+  const sectionBg = isDark
+    ? 'linear-gradient(180deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e293b 75%, #0f172a 100%)'
+    : 'linear-gradient(180deg, #ffffff 0%, #f9fafb 25%, #f3f4f6 50%, #f9fafb 75%, #ffffff 100%)'
+  const headingColor = isDark ? '#f1f5f9' : '#111827'
+  const textColor = isDark ? '#94a3b8' : '#374151'
+  const strongColor = isDark ? '#e2e8f0' : '#111827'
+  const dotOpacity = isDark ? 0.3 : 0.5
+  const orbOpacity1 = isDark ? 0.08 : 0.05
+  const orbOpacity2 = isDark ? 0.06 : 0.05
+  const badgeBg = isDark
+    ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(59, 130, 246, 0.1))'
+    : 'linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(59, 130, 246, 0.05))'
+  const badgeBorder = isDark
+    ? '1px solid rgba(124, 58, 237, 0.25)'
+    : '1px solid rgba(124, 58, 237, 0.15)'
+  const summaryBg = isDark
+    ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(59, 130, 246, 0.08))'
+    : 'linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(59, 130, 246, 0.04))'
+  const summaryBorder = isDark
+    ? '1px solid rgba(124, 58, 237, 0.2)'
+    : '1px solid rgba(124, 58, 237, 0.12)'
 
   /* Auto-advance the active step highlight */
   useEffect(() => {
@@ -469,9 +504,10 @@ export default function WhatIsPage() {
       style={{
         minHeight: '100vh',
         padding: '80px 60px 100px',
-        background: 'linear-gradient(180deg, #ffffff 0%, #f8faff 25%, #f0f2fa 50%, #f5f7ff 75%, #ffffff 100%)',
+        background: sectionBg,
         position: 'relative',
         overflow: 'hidden',
+        transition: 'background 0.3s ease',
       }}
     >
       {/* ── Ambient background shapes ── */}
@@ -482,7 +518,7 @@ export default function WhatIsPage() {
           right: '-8%',
           width: 650,
           height: 650,
-          background: 'radial-gradient(circle, rgba(124, 58, 237, 0.05) 0%, transparent 55%)',
+          background: `radial-gradient(circle, rgba(124, 58, 237, ${orbOpacity1}) 0%, transparent 55%)`,
           borderRadius: '50%',
           pointerEvents: 'none',
           animation: 'glowBreath 6s ease-in-out infinite',
@@ -495,7 +531,7 @@ export default function WhatIsPage() {
           left: '-8%',
           width: 550,
           height: 550,
-          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 55%)',
+          background: `radial-gradient(circle, rgba(59, 130, 246, ${orbOpacity2}) 0%, transparent 55%)`,
           borderRadius: '50%',
           pointerEvents: 'none',
           animation: 'glowBreath 8s ease-in-out infinite 2s',
@@ -509,7 +545,7 @@ export default function WhatIsPage() {
           transform: 'translateX(-50%)',
           width: 900,
           height: 400,
-          background: 'radial-gradient(ellipse, rgba(124, 58, 237, 0.025) 0%, transparent 60%)',
+          background: `radial-gradient(ellipse, rgba(124, 58, 237, ${isDark ? '0.04' : '0.025'}) 0%, transparent 60%)`,
           pointerEvents: 'none',
         }}
       />
@@ -521,10 +557,10 @@ export default function WhatIsPage() {
           left: '5%',
           width: 120,
           height: 120,
-          backgroundImage: 'radial-gradient(circle, rgba(124, 58, 237, 0.1) 1px, transparent 1px)',
+          backgroundImage: `radial-gradient(circle, rgba(124, 58, 237, ${isDark ? '0.15' : '0.1'}) 1px, transparent 1px)`,
           backgroundSize: '16px 16px',
           pointerEvents: 'none',
-          opacity: 0.5,
+          opacity: dotOpacity,
         }}
       />
       <div
@@ -534,10 +570,10 @@ export default function WhatIsPage() {
           right: '5%',
           width: 100,
           height: 100,
-          backgroundImage: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 1px, transparent 1px)',
+          backgroundImage: `radial-gradient(circle, rgba(59, 130, 246, ${isDark ? '0.15' : '0.1'}) 1px, transparent 1px)`,
           backgroundSize: '16px 16px',
           pointerEvents: 'none',
-          opacity: 0.5,
+          opacity: dotOpacity,
         }}
       />
 
@@ -552,8 +588,8 @@ export default function WhatIsPage() {
               gap: 10,
               padding: '10px 26px',
               borderRadius: 50,
-              background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(59, 130, 246, 0.05))',
-              border: '1px solid rgba(124, 58, 237, 0.15)',
+              background: badgeBg,
+              border: badgeBorder,
               marginBottom: 32,
               opacity: titleInView ? 1 : 0,
               transform: titleInView ? 'translateY(0)' : 'translateY(20px)',
@@ -562,7 +598,7 @@ export default function WhatIsPage() {
               boxShadow: '0 2px 12px rgba(124, 58, 237, 0.06)',
             }}
           >
-            <span style={{ fontSize: 15 }}>💡</span>
+            <Icon name="lightbulb" size={15} color="#a78bfa" />
             <span
               style={{
                 background: 'linear-gradient(135deg, #1A5EA8, #3b82f6)',
@@ -582,7 +618,7 @@ export default function WhatIsPage() {
               fontFamily: "'Playfair Display', serif",
               fontSize: 50,
               fontWeight: 900,
-              color: '#1e293b',
+              color: headingColor,
               marginBottom: 26,
               opacity: titleInView ? 1 : 0,
               animation: titleInView ? 'textReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both' : 'none',
@@ -606,7 +642,7 @@ export default function WhatIsPage() {
           <p
             style={{
               fontSize: 17,
-              color: '#64748b',
+              color: textColor,
               lineHeight: 1.9,
               maxWidth: 860,
               margin: '0 auto 70px',
@@ -617,7 +653,7 @@ export default function WhatIsPage() {
             An AI Data Extractor is a{' '}
             <strong
               style={{
-                color: '#334155',
+                color: strongColor,
                 textDecoration: 'underline',
                 textUnderlineOffset: 3,
                 textDecorationColor: '#1A5EA8',
@@ -640,7 +676,7 @@ export default function WhatIsPage() {
               fontFamily: "'Playfair Display', serif",
               fontSize: 36,
               fontWeight: 800,
-              color: '#1e293b',
+              color: headingColor,
               marginBottom: 10,
               opacity: titleInView ? 1 : 0,
               animation: titleInView ? 'textReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both' : 'none',
@@ -651,7 +687,7 @@ export default function WhatIsPage() {
           <p
             style={{
               fontSize: 15,
-              color: '#94a3b8',
+              color: textColor,
               marginBottom: 8,
               opacity: titleInView ? 1 : 0,
               animation: titleInView ? 'subtitleSlide 0.8s ease 0.55s both' : 'none',
@@ -721,7 +757,7 @@ export default function WhatIsPage() {
                     ? step.gradient
                     : i < activeStep
                       ? step.color + '60'
-                      : 'rgba(148, 163, 184, 0.2)',
+                      : `rgba(148, 163, 184, ${isDark ? '0.15' : '0.2'})`,
                   transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
                   cursor: 'pointer',
                 }}
@@ -747,7 +783,7 @@ export default function WhatIsPage() {
           }}
         >
           {/* Animated connection line */}
-          <TimelineConnector inView={cardsInView} activeStep={activeStep} totalSteps={PIPELINE_STEPS.length} />
+          <TimelineConnector inView={cardsInView} activeStep={activeStep} totalSteps={PIPELINE_STEPS.length} isDark={isDark} />
 
           {/* Flowing particles */}
           <FlowingParticles active={cardsInView} />
@@ -763,6 +799,7 @@ export default function WhatIsPage() {
               onLeave={() => setHoveredCard(null)}
               inView={cardsInView}
               activeStep={activeStep}
+              isDark={isDark}
             />
           ))}
         </div>
@@ -784,8 +821,8 @@ export default function WhatIsPage() {
               gap: 14,
               padding: '16px 36px',
               borderRadius: 16,
-              background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(59, 130, 246, 0.04))',
-              border: '1px solid rgba(124, 58, 237, 0.12)',
+              background: summaryBg,
+              border: summaryBorder,
               boxShadow: '0 4px 20px rgba(124, 58, 237, 0.04)',
               backdropFilter: 'blur(8px)',
               WebkitBackdropFilter: 'blur(8px)',
@@ -793,10 +830,10 @@ export default function WhatIsPage() {
             }}
           >
             <span style={{
-              fontSize: 20,
               animation: cardsInView ? 'iconFloat 2s ease-in-out infinite' : 'none',
-            }}>⚡</span>
-            <span style={{ fontSize: 14, color: '#64748b', lineHeight: 1.7 }}>
+              display: 'inline-flex',
+            }}><Icon name="zap" size={20} color="#eab308" /></span>
+            <span style={{ fontSize: 14, color: textColor, lineHeight: 1.7 }}>
               From document upload to structured data download — our AI pipeline handles
               the entire extraction workflow automatically,{' '}
               <strong style={{

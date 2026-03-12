@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import axios from 'axios'
 import { DOC_TYPES, UPLOAD_METHODS, API_BASE } from '../utils/constants'
+import Icon from './Icons'
 
 // Sales Order module uses a separate API prefix (routed to the same backend)
 const SALES_API = '/api/v1'
@@ -466,13 +467,12 @@ export default function WizardModal({ open, onClose }) {
 
                       <div
                         style={{
-                          fontSize: 40,
                           marginBottom: 16,
                           transition: 'transform 0.3s',
                           transform: sel ? 'scale(1.15)' : 'scale(1)',
                         }}
                       >
-                        {dt.icon}
+                        <Icon name={dt.icon} size={40} color={sel ? '#6366f1' : '#64748b'} />
                       </div>
                       <div style={{ fontWeight: 700, color: '#1e293b', fontSize: 17, marginBottom: 8 }}>
                         {dt.title}
@@ -574,13 +574,12 @@ export default function WizardModal({ open, onClose }) {
 
                       <div
                         style={{
-                          fontSize: 48,
                           marginBottom: 18,
                           transition: 'transform 0.3s',
                           transform: sel ? 'scale(1.15)' : 'scale(1)',
                         }}
                       >
-                        {opt.icon}
+                        <Icon name={opt.icon} size={48} color={sel ? '#1A5EA8' : '#64748b'} />
                       </div>
                       <div style={{ fontWeight: 700, color: '#1e293b', fontSize: 19, marginBottom: 10 }}>
                         {opt.title}
@@ -623,7 +622,7 @@ export default function WizardModal({ open, onClose }) {
                     </label>
                     <div style={{ position: 'relative', marginBottom: 22 }}>
                       <span style={{ position: 'absolute', left: 15, top: '50%', transform: 'translateY(-50%)', fontSize: 18 }}>
-                        📧
+                        <Icon name="mail" size={18} color="#1A5EA8" />
                       </span>
                       <input
                         type="email"
@@ -659,7 +658,7 @@ export default function WizardModal({ open, onClose }) {
                     </label>
                     <div style={{ position: 'relative', marginBottom: 30 }}>
                       <span style={{ position: 'absolute', left: 15, top: '50%', transform: 'translateY(-50%)', fontSize: 18 }}>
-                        🔒
+                        <Icon name="lock" size={18} color="#64748b" />
                       </span>
                       <input
                         type={showPassword ? 'text' : 'password'}
@@ -704,7 +703,18 @@ export default function WizardModal({ open, onClose }) {
                           padding: 4,
                         }}
                       >
-                        {showPassword ? '🙈' : '👁️'}
+                        {showPassword ? (
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+                            <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+                            <line x1="1" y1="1" x2="23" y2="23" />
+                          </svg>
+                        ) : (
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                          </svg>
+                        )}
                       </button>
                     </div>
 
@@ -745,11 +755,11 @@ export default function WizardModal({ open, onClose }) {
                         </>
                       ) : connecting ? (
                         <>
-                          <span style={{ animation: 'spin 1s linear infinite', display: 'inline-block' }}>⚡</span>
+                          <span style={{ animation: 'spin 1s linear infinite', display: 'inline-flex' }}><Icon name="zap" size={16} color="#fff" /></span>
                           Connecting...
                         </>
                       ) : (
-                        <>🔗 Connect Email</>
+                        <><Icon name="link" size={16} color="#fff" style={{ marginRight: 6 }} /> Connect Email</>
                       )}
                     </button>
 
@@ -874,7 +884,7 @@ export default function WizardModal({ open, onClose }) {
                             flexShrink: 0,
                           }}
                         >
-                          📄
+                          <Icon name="file-text" size={20} color="#64748b" />
                         </div>
                         <div style={{ textAlign: 'left', flex: 1, minWidth: 0 }}>
                           <div
@@ -980,7 +990,7 @@ export default function WizardModal({ open, onClose }) {
               {extracting && (
                 <>
                   <div style={{ fontSize: 64, marginBottom: 20, animation: 'pulse 1.5s ease-in-out infinite' }}>
-                    🧠
+                    <Icon name="brain" size={24} color="#6366f1" />
                   </div>
                   <h2
                     style={{
@@ -1023,7 +1033,7 @@ export default function WizardModal({ open, onClose }) {
 
               {extractError && (
                 <>
-                  <div style={{ fontSize: 56, marginBottom: 18 }}>⚠️</div>
+                  <div style={{ marginBottom: 18 }}><Icon name="alert-triangle" size={56} color="#ef4444" /></div>
                   <h2
                     style={{
                       fontFamily: "'Playfair Display', serif",
@@ -1140,10 +1150,10 @@ export default function WizardModal({ open, onClose }) {
                           }}
                         >
                           {[
-                            { label: 'Files Processed', value: allInvoices.length, icon: '📄' },
-                            { label: 'Line Items', value: totalLineItems, icon: '📊' },
-                            { label: 'Pages OK', value: `${successPages}/${totalPages}`, icon: successPages > 0 ? '✅' : '⚠️' },
-                            { label: 'Accuracy', value: soAccuracy != null ? `${soAccuracy}%` : '—', icon: '🎯' },
+                            { label: 'Files Processed', value: allInvoices.length, icon: 'file-text' },
+                            { label: 'Line Items', value: totalLineItems, icon: 'bar-chart' },
+                            { label: 'Pages OK', value: `${successPages}/${totalPages}`, icon: successPages > 0 ? 'shield' : 'alert-triangle' },
+                            { label: 'Accuracy', value: soAccuracy != null ? `${soAccuracy}%` : '—', icon: 'star' },
                           ].map((stat, i) => (
                             <div
                               key={i}
@@ -1154,7 +1164,7 @@ export default function WizardModal({ open, onClose }) {
                                 border: '1px solid #e2e8f0',
                               }}
                             >
-                              <div style={{ fontSize: 24, marginBottom: 6 }}>{stat.icon}</div>
+                              <div style={{ marginBottom: 6 }}><Icon name={stat.icon} size={24} color="#6366f1" /></div>
                               <div style={{ fontWeight: 800, color: '#000', fontSize: 20, marginBottom: 2 }}>
                                 {stat.value}
                               </div>
@@ -1380,14 +1390,14 @@ export default function WizardModal({ open, onClose }) {
                           {
                             label: 'Data Points',
                             value: extractResult.data?.accuracy_summary?.total_data_points || '—',
-                            icon: '📊',
+                            icon: 'bar-chart',
                           },
                           {
                             label: 'Accuracy',
                             value: extractResult.data?.accuracy_summary?.overall_accuracy_pct
                               ? `${extractResult.data.accuracy_summary.overall_accuracy_pct}%`
                               : '—',
-                            icon: '🎯',
+                            icon: 'star',
                           },
                         ].map((stat, i) => (
                           <div
@@ -1399,7 +1409,7 @@ export default function WizardModal({ open, onClose }) {
                               border: '1px solid #e2e8f0',
                             }}
                           >
-                            <div style={{ fontSize: 24, marginBottom: 6 }}>{stat.icon}</div>
+                            <div style={{ marginBottom: 6 }}><Icon name={stat.icon} size={24} color="#6366f1" /></div>
                             <div style={{ fontWeight: 800, color: '#000', fontSize: 20, marginBottom: 2 }}>
                               {stat.value}
                             </div>
@@ -1564,7 +1574,7 @@ export default function WizardModal({ open, onClose }) {
                           Building Excel...
                         </>
                       ) : (
-                        <>📥 Download Excel</>
+                        <><Icon name="download" size={16} color="#fff" style={{ marginRight: 6 }} /> Download Excel</>
                       )}
                     </button>
                     <button
@@ -1593,7 +1603,7 @@ export default function WizardModal({ open, onClose }) {
                         e.currentTarget.style.boxShadow = '0 8px 28px rgba(59, 130, 246, 0.3)'
                       }}
                     >
-                      📋 Download JSON
+                      <><Icon name="clipboard" size={16} color="#6366f1" style={{ marginRight: 6 }} /> Download JSON</>
                     </button>
                     <button
                       onClick={handleClose}

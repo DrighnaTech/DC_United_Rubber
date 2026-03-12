@@ -8,7 +8,11 @@ from fastapi.exceptions import HTTPException
 
 from app.helper.extract_helper import EmailInvoiceExtractor
 
-load_dotenv(verbose=True)
+load_dotenv(
+    dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', '.env'),
+    verbose=True,
+    override=True,
+)
 
 class ExtractDataService:
     @staticmethod

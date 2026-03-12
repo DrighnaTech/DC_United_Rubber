@@ -2,21 +2,29 @@ import React from 'react'
 import WorkflowOrbit from './WorkflowOrbit'
 import { STATS } from '../utils/constants'
 import { useDelayedVisible, useMousePosition } from '../hooks/useAnimations'
+import Icon from './Icons'
 
-export default function HeroSection({ onOpenWizard }) {
+export default function HeroSection({ onOpenWizard, isDark = true }) {
   const visible = useDelayedVisible(250)
   const mouse = useMousePosition()
+
+  const textPrimary = isDark ? '#fff' : '#111827'
+  const textSecondary = isDark ? '#94a3b8' : '#374151'
+  const textMuted = isDark ? '#64748b' : '#6b7280'
+  const statColor = isDark ? '#fff' : '#111827'
 
   return (
     <section
       id="hero"
       style={{
-        minHeight: '100vh',
+        minHeight: 'calc(100vh - 70px)',
         display: 'flex',
         alignItems: 'center',
-        padding: '130px 60px 80px',
+        padding: '40px 60px 40px',
         position: 'relative',
         overflow: 'visible',
+        background: isDark ? 'transparent' : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        transition: 'background 0.3s ease',
       }}
     >
       {/* Background glow orbs with parallax */}
@@ -27,7 +35,9 @@ export default function HeroSection({ onOpenWizard }) {
           left: '-8%',
           width: 550,
           height: 550,
-          background: 'radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 65%)',
+          background: isDark
+            ? 'radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 65%)'
+            : 'radial-gradient(circle, rgba(26, 94, 168, 0.08) 0%, transparent 65%)',
           borderRadius: '50%',
           filter: 'blur(70px)',
           pointerEvents: 'none',
@@ -42,7 +52,9 @@ export default function HeroSection({ onOpenWizard }) {
           right: '0%',
           width: 420,
           height: 420,
-          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.07) 0%, transparent 65%)',
+          background: isDark
+            ? 'radial-gradient(circle, rgba(59, 130, 246, 0.07) 0%, transparent 65%)'
+            : 'radial-gradient(circle, rgba(240, 118, 33, 0.06) 0%, transparent 65%)',
           borderRadius: '50%',
           filter: 'blur(70px)',
           pointerEvents: 'none',
@@ -61,8 +73,12 @@ export default function HeroSection({ onOpenWizard }) {
             gap: 10,
             padding: '10px 24px',
             borderRadius: 50,
-            background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.18), rgba(59, 130, 246, 0.12))',
-            border: '1px solid rgba(139, 92, 246, 0.28)',
+            background: isDark
+              ? 'linear-gradient(135deg, rgba(124, 58, 237, 0.18), rgba(59, 130, 246, 0.12))'
+              : 'linear-gradient(135deg, rgba(26, 94, 168, 0.1), rgba(240, 118, 33, 0.08))',
+            border: isDark
+              ? '1px solid rgba(139, 92, 246, 0.28)'
+              : '1px solid rgba(26, 94, 168, 0.2)',
             marginBottom: 28,
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(20px)',
@@ -70,7 +86,7 @@ export default function HeroSection({ onOpenWizard }) {
             animation: visible ? 'heroTagFloat 4s ease-in-out infinite' : 'none',
           }}
         >
-          <span style={{ fontSize: 16, animation: 'starTwinkle 2s ease-in-out infinite' }}>✨</span>
+          <span style={{ display: 'inline-flex', animation: 'starTwinkle 2s ease-in-out infinite' }}><Icon name="sparkles" size={16} color="#F5924A" /></span>
           <span
             style={{
               color: '#F5924A',
@@ -96,7 +112,7 @@ export default function HeroSection({ onOpenWizard }) {
             transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s',
           }}
         >
-          <span style={{ color: '#fff' }}>AI </span>
+          <span style={{ color: textPrimary }}>AI </span>
           <span
             style={{
               background: 'linear-gradient(135deg, #1A5EA8, #3b82f6, #F07621)',
@@ -114,7 +130,7 @@ export default function HeroSection({ onOpenWizard }) {
         <p
           style={{
             fontSize: 17,
-            color: '#94a3b8',
+            color: textSecondary,
             lineHeight: 1.75,
             maxWidth: 530,
             marginBottom: 38,
@@ -143,19 +159,19 @@ export default function HeroSection({ onOpenWizard }) {
         >
           {STATS.map((s, i) => (
             <div key={i} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 24, marginBottom: 4 }}>{s.icon}</div>
+              <div style={{ marginBottom: 4 }}><Icon name={s.icon} size={24} color={isDark ? '#94a3b8' : '#6b7280'} /></div>
               <div
                 style={{
                   fontFamily: "'Playfair Display', serif",
                   fontSize: 30,
                   fontWeight: 900,
-                  color: '#fff',
+                  color: statColor,
                   animation: `countUp 0.6s ease-out ${0.7 + i * 0.15}s both`,
                 }}
               >
                 {s.value}
               </div>
-              <div style={{ fontSize: 12, color: '#64748b', fontWeight: 500, marginTop: 3 }}>
+              <div style={{ fontSize: 12, color: textMuted, fontWeight: 500, marginTop: 3 }}>
                 {s.label}
               </div>
             </div>
@@ -206,8 +222,12 @@ export default function HeroSection({ onOpenWizard }) {
             }}
           />
           <span style={{ position: 'relative', zIndex: 1 }}>See it in Action</span>
-          <span style={{ position: 'relative', zIndex: 1, fontSize: 20 }}>🌐</span>
-          <span style={{ position: 'relative', zIndex: 1, fontSize: 18 }}>→</span>
+          <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </span>
         </button>
       </div>
 

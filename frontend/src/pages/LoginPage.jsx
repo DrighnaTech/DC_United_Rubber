@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo'
+import Icon from '../components/Icons'
 
 /* ── Eye icon ── */
 const IconEye = ({ off }) => off ? (
@@ -233,9 +234,9 @@ export default function LoginPage() {
 
             {/* Feature badges */}
             {[
-              { icon: '🧠', label: 'AI Extraction' },
-              { icon: '📊', label: 'Live Analytics' },
-              { icon: '🔒', label: 'Secure Access' },
+              { icon: 'brain', label: 'AI Extraction' },
+              { icon: 'bar-chart', label: 'Live Analytics' },
+              { icon: 'lock', label: 'Secure Access' },
             ].map((b, i) => (
               <div key={i} style={{
                 display: 'inline-flex', alignItems: 'center', gap: 7,
@@ -246,7 +247,7 @@ export default function LoginPage() {
                 marginRight: i < 2 ? 6 : 0,
                 animation: mounted ? `fadeSlide 0.5s ease ${0.3 + i * 0.1}s both` : 'none',
               }}>
-                <span style={{ fontSize: 12 }}>{b.icon}</span>
+                <Icon name={b.icon} size={12} color="#fff" />
                 <span style={{ fontSize: 11, color: '#fff', fontWeight: 600 }}>{b.label}</span>
               </div>
             ))}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { WORKFLOW_STEPS } from '../utils/constants'
+import Icon from './Icons'
 
 const SIZE = 550
 const CENTER = SIZE / 2
@@ -95,8 +96,8 @@ export default function WorkflowOrbit({ visible = true }) {
         }}
       >
         {/* Rotating gear icon */}
-        <div style={{ fontSize: 32, marginBottom: 4, animation: 'rotateGear 8s linear infinite' }}>
-          ⚙️
+        <div style={{ marginBottom: 4, animation: 'rotateGear 8s linear infinite', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Icon name="settings" size={32} color="#a78bfa" />
         </div>
         <div
           style={{
@@ -160,7 +161,7 @@ export default function WorkflowOrbit({ visible = true }) {
                 backdropFilter: 'blur(8px)',
               }}
             >
-              {step.icon}
+              <Icon name={step.icon} size={24} color={isHov ? '#F07621' : '#94a3b8'} />
             </div>
             {/* Label */}
             <div
