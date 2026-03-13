@@ -539,7 +539,7 @@ function renderMonthlyChart(canvasId, rows) {
         borderColor: '#2463A4',
         backgroundColor: 'rgba(36,99,164,.08)',
         borderWidth: 2.5,
-        pointRadius: 4,
+        pointRadius: 4, pointHoverRadius: 7,
         pointBackgroundColor: '#2463A4',
         fill: true,
         tension: 0.35,
@@ -548,10 +548,12 @@ function renderMonthlyChart(canvasId, rows) {
     options: {
       responsive: true, maintainAspectRatio: false,
       layout: { padding: { top: 14 } },
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { display: false },
         tooltip: {
           callbacks: {
+            title: ctx => ctx[0].label,
             label: ctx => '  Revenue: ' + fmtINRFull(ctx.raw),
           },
         },
@@ -1369,14 +1371,14 @@ function renderTrendChart(rows) {
           label: 'Net Revenue (₹)',
           data: rows.map(r => parseFloat(r.total_net || r.total_amount) || 0),
           borderColor: '#2463A4', backgroundColor: 'rgba(36,99,164,.07)',
-          borderWidth: 2.5, fill: true, tension: .35, pointRadius: 3,
+          borderWidth: 2.5, fill: true, tension: .35, pointRadius: 4, pointHoverRadius: 7,
           yAxisID: 'y1',
         },
         {
           label: 'Invoice Count',
           data: rows.map(r => parseInt(r.invoice_count) || 0),
           borderColor: '#E8A838', backgroundColor: 'transparent',
-          borderWidth: 2, borderDash: [5, 3], pointRadius: 2, tension: .35,
+          borderWidth: 2, borderDash: [5, 3], pointRadius: 3, pointHoverRadius: 6, tension: .35,
           yAxisID: 'y2',
         },
       ],
@@ -1384,10 +1386,12 @@ function renderTrendChart(rows) {
     options: {
       responsive: true, maintainAspectRatio: false,
       layout: { padding: { top: 14 } },
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { position: 'top', labels: { font: { size: 11 }, usePointStyle: true, padding: 10 } },
         tooltip: {
           callbacks: {
+            title: ctx => ctx[0].label,
             label: ctx => ctx.datasetIndex === 0
               ? '  Revenue: ' + fmtINRFull(ctx.raw)
               : '  Count: ' + fmtNum(ctx.raw),

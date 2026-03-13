@@ -116,7 +116,7 @@ export const PRODUCTS = [
 ];
 
 export const COMPANY_LINKS = [
-  { label: "Book a Demo", href: "https://datacaffe.ai/demo" },
+  // { label: "Book a Demo", href: "https://datacaffe.ai/demo" },
   { label: "Contact Us", href: "https://datacaffe.ai/contactus" },
   { label: "Pricing", href: "https://datacaffe.ai/pricing" },
   { label: "About Us", href: "https://datacaffe.ai/aboutus" },

@@ -115,7 +115,7 @@ export default function WizardModal({ open, onClose }) {
       const res = await axios.post(`${SALES_API}/extract`, formData, {
         timeout: 600000, // 10 min — email scanning can be slow
       })
-      console.log('[Sales Order Email] API response:', JSON.stringify(res.data, null, 2))
+      if (import.meta.env.DEV) console.log('[Sales Order Email] API response:', JSON.stringify(res.data, null, 2))
       if (res.data.status) {
         setExtractResult({ ...res.data, _isSalesOrder: true })
       } else {
@@ -146,7 +146,7 @@ export default function WizardModal({ open, onClose }) {
           headers: { 'Content-Type': 'multipart/form-data' },
           timeout: 600000,
         })
-        console.log('[Sales Order Upload] API response:', JSON.stringify(res.data, null, 2))
+        if (import.meta.env.DEV) console.log('[Sales Order Upload] API response:', JSON.stringify(res.data, null, 2))
         if (res.data.status) {
           setExtractResult({ ...res.data, _isSalesOrder: true })
         } else {

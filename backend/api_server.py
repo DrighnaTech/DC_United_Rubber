@@ -34,7 +34,7 @@ app = FastAPI(
 # ── CORS for React frontend ──
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:3000", "http://127.0.0.1:5173", "http://127.0.0.1:5174", "http://127.0.0.1:5175"],
+    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:3000", "http://127.0.0.1:5173", "http://127.0.0.1:5174", "http://127.0.0.1:5175", "https://urdemo.datacaffe.ai", "http://urdemo.datacaffe.ai"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -151,12 +151,18 @@ async def extract_file(
         }
 
         # Extract
-        data, usage, token_analytics = extract_drawing(
-            openai_key,
-            images,
-            model=model,
-            max_tokens=max_tokens,
-        )
+        try:
+            data, usage, token_analytics = extract_drawing(
+                openai_key,
+                images,
+                model=model,
+                max_tokens=max_tokens,
+            )
+        except Exception as e:
+            error_msg = str(e)
+            if "insufficient_quota" in error_msg or "429" in error_msg:
+                raise HTTPException(status_code=429, detail="OpenAI API quota exceeded. Please check your billing at https://platform.openai.com/account/billing")
+            raise HTTPException(status_code=500, detail=f"Extraction failed: {error_msg}")
 
         return JSONResponse({
             "file_name": filename,
